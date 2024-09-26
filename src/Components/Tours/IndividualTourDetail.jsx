@@ -66,7 +66,7 @@ const IndividualTourDetail = () => {
                         pauseOnHover: true,
                         draggable: true,
                         progress: undefined,
-                        transition: Slide // Use Slide for right-side animation
+                        transition: slide // Use Slide for right-side animation
                     });
                 }
             }).catch(error => {
