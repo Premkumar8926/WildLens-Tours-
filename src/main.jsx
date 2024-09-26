@@ -6,7 +6,7 @@ import axios from 'axios'
 import { Provider } from 'react-redux'
 import store from './ReduxStore/ReduxStore.jsx'
 
-axios.defaults.baseURL = 'http://localhost:3000/api/user/';
+axios.defaults.baseURL = 'https://wildlens-tours-backend-dl8o.onrender.com/api';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
