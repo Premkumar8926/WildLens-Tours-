@@ -1,0 +1,234 @@
+.bg {
+    background: url("../../assets/bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 90vh;
+}
+
+.outer-container {
+    background-color: #E1EAE5;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 15px 25px rgba(0, 0, 0, .1);
+    width: 350px;
+}
+
+
+
+p {
+    margin: 0;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: 700;
+    color: #193529;
+}
+
+.text1 {
+    color: #3F775A;
+    font-weight: 600;
+    padding-bottom: 19px;
+    font-size: 14px;
+}
+
+.text2 {
+    color: #696a6b;
+    font-weight: 600;
+    padding-bottom: 13px;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.text2 span {
+    padding-left: 3px;
+    color: #34664D;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.input-container {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.input-container i {
+    position: absolute;
+    margin-top: 13.5px;
+    left: 15px;
+    font-size: 18px;
+    color: #696a6b;
+}
+
+.input-container input {
+    background-color: rgba(247, 246, 244, 255);
+    width: 100%;
+    padding: 10px 20px;
+    padding-left: 45px;
+    border: 2px solid rgba(247, 246, 244, 255);
+    border-radius: 10px;
+    outline: none;
+    transition: .4s;
+    font-weight: 600;
+}
+
+.input-container input:focus {
+    border: 2px solid #28523E;
+}
+
+.input-container textarea {
+    background-color: rgba(247, 246, 244, 255);
+    width: 100%;
+    padding: 10px 20px;
+    padding-left: 45px;
+    border: 2px solid rgba(247, 246, 244, 255);
+    border-radius: 10px;
+    outline: none;
+    transition: .4s;
+    font-weight: 600;
+}
+
+.input-container textarea:focus {
+    border: 2px solid #28523E;
+}
+
+.custom-btn {
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    font-size: 17px;
+    font-weight: 600;
+    background-color: #28523E;
+    color: #fff;
+    border-radius: 10px;
+    margin-top: 6px;
+    margin-bottom: 5px;
+    transition: 0.3s;
+}
+
+.custom-btn:hover {
+    background-color: #193529;
+}
+
+.erro-msg {
+    font-size: 13px;
+    color: red;
+}
+
+.forgot-password-text {
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 13px;
+    font-weight: 400;
+}
+
+.line {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 25px;
+}
+
+.login {
+    font-size: 15px;
+}
+
+.loading-container {
+    z-index: 10000;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.3);
+    min-height: 100vh;
+    max-height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.not-found-page {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+}
+
+.not-found-page-img {
+    width: 350px;
+}
+
+.user-profile {
+    min-height: 90vh;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.user_profile-img {
+    width: 200px;
+    margin-top: 10px;
+}
+
+.user_profile-img img {
+    width: 100%;
+}
+
+.user_profile_content h2 {
+    font-size: 30px;
+}
+
+.border {
+    width: 100%;
+    height: 1px;
+    background-color: #3F775A;
+    margin-top: 20px;
+}
+
+.bookings_list {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.bookings_list ul {
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0;
+}
+
+.bookings_list ul li {
+    list-style: none;
+    font-weight: 600;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.bookings_list a {
+    text-decoration: none;
+    color: black;
+    position: relative;
+}
+
+.bookings_list a::before {
+    content: '';
+    height: 3.5px; 
+    width: 0; 
+    background-color: #3F775A; 
+    position: absolute; 
+    left: 0; 
+    bottom: -5px; 
+    transition: width 0.6s ease, background-color 0.3s ease; 
+    border-radius: 25px; 
+}
+
+
+.bookings_list a.active::before {
+    width: 75%; 
+}
+
+@media screen and (max-width:445px){
+    .bookings_list a {
+        font-size: 15px;
+    }
+}
