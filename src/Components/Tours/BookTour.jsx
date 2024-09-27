@@ -12,24 +12,29 @@ const BookTour = ({ tour, setIsBooking }) => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    if (!tour) {
+        return <p>No tour details available</p>;
+    }
+
     const handleBooking = async (values) => {
         setLoading(true);
         try {
-            // Request to create a Razorpay order
             const response = await axios.post('/tour/create-order', { amount: tour.price });
-            const { id, currency, amount: orderAmount } = response.data;
+            if (!response.data) {
+                throw new Error('Invalid response from server');
+            }
 
+            const { id, currency, amount: orderAmount } = response.data;
             setLoading(false);
 
             const options = {
-                key: 'rzp_test_gijcvzVIahNMp1', 
+                key: 'rzp_test_gijcvzVIahNMp1',
                 amount: orderAmount,
                 currency: currency,
                 name: 'WildLens Tours',
                 description: 'Tour booking',
                 order_id: id,
                 handler: async function (response) {
-                    
                     console.log('Payment successful', response);
                 },
                 prefill: {
@@ -46,14 +51,12 @@ const BookTour = ({ tour, setIsBooking }) => {
             paymentObject.open();
         } catch (error) {
             setLoading(false);
-            toast.error("Please try again later.");
-            console.error('Error creating Razorpay order:', error);
+            console.error('Booking error:', error.message);
+            toast.error("An error occurred while creating the order. Please try again.");
         }
     };
 
     const formik = useFormik({
-
-        // Initial values
         initialValues: {
             email: '',
             name: '',
@@ -61,7 +64,6 @@ const BookTour = ({ tour, setIsBooking }) => {
             companions: ''
         },
 
-        // Validations
         validationSchema: yup.object({
             email: yup.string()
                 .email('Invalid email')
@@ -72,24 +74,23 @@ const BookTour = ({ tour, setIsBooking }) => {
                 .required("Mobile no is required")
                 .matches(/^\d{10}$/, "Invalid mobile no"),
             companions: yup.number()
-                .max((tour.travellersLimit - 1), `Max ${tour.travellersLimit - 1} companions`)
-
+                .max(tour?.travellersLimit ? (tour.travellersLimit - 1) : 0, `Max ${tour?.travellersLimit - 1 || 0} companions`)
         }),
 
-        onSubmit: (values) => {   // Function to handle form submission
-            handleBooking(values)
+        onSubmit: (values) => {
+            handleBooking(values);
             formik.resetForm();
         }
-    })
+    });
 
     return (
         <>
-            {
-                loading &&
+            {loading && (
                 <div className="loading-container">
                     <ReactLoading type="spinningBubbles" color="#3F775A" />
                 </div>
-            }
+            )}
+
             <div className='header'>
                 <div className="container inner-header">
                     <div className="logo">
@@ -109,10 +110,9 @@ const BookTour = ({ tour, setIsBooking }) => {
                     <p className='text1'>Kindly fill the details</p>
                     <form action="" onSubmit={formik.handleSubmit}>
                         <div className="input-container">
-                            {
-                                formik.touched.name && formik.errors.name ?
-                                    <div className='erro-msg'>{formik.errors.name}</div> : null
-                            }
+                            {formik.touched.name && formik.errors.name ? (
+                                <div className='erro-msg'>{formik.errors.name}</div>
+                            ) : null}
                             <i className='bx bx-user'></i>
                             <input
                                 type="text"
@@ -121,10 +121,9 @@ const BookTour = ({ tour, setIsBooking }) => {
                             ></input>
                         </div>
                         <div className="input-container">
-                            {
-                                formik.touched.email && formik.errors.email ?
-                                    <div className='erro-msg'>{formik.errors.email}</div> : null
-                            }
+                            {formik.touched.email && formik.errors.email ? (
+                                <div className='erro-msg'>{formik.errors.email}</div>
+                            ) : null}
                             <i className='bx bx-envelope'></i>
                             <input
                                 type="email"
@@ -133,11 +132,10 @@ const BookTour = ({ tour, setIsBooking }) => {
                             />
                         </div>
                         <div className="input-container">
-                            {
-                                formik.touched.mobileNo && formik.errors.mobileNo ?
-                                    <div className='erro-msg'>{formik.errors.mobileNo}</div> : null
-                            }
-                            <i className='bx bx-phone-call' ></i>
+                            {formik.touched.mobileNo && formik.errors.mobileNo ? (
+                                <div className='erro-msg'>{formik.errors.mobileNo}</div>
+                            ) : null}
+                            <i className='bx bx-phone-call'></i>
                             <input
                                 type="text"
                                 placeholder='Mobile no'
@@ -145,11 +143,10 @@ const BookTour = ({ tour, setIsBooking }) => {
                             />
                         </div>
                         <div className="input-container">
-                            {
-                                formik.touched.companions && formik.errors.companions ?
-                                    <div className='erro-msg'>{formik.errors.companions}</div> : null
-                            }
-                            <i className='bx bx-user-plus' ></i>
+                            {formik.touched.companions && formik.errors.companions ? (
+                                <div className='erro-msg'>{formik.errors.companions}</div>
+                            ) : null}
+                            <i className='bx bx-user-plus'></i>
                             <input
                                 type="text"
                                 placeholder='Companions'
@@ -161,10 +158,8 @@ const BookTour = ({ tour, setIsBooking }) => {
                             <button className='brochure' type="button">Brochure</button>
                         </div>
                     </form>
-
                 </div>
 
-                {/* Toast container for displaying notifications */}
                 <ToastContainer
                     position="top-right"
                     autoClose={5000}
@@ -176,7 +171,6 @@ const BookTour = ({ tour, setIsBooking }) => {
                     draggable
                     pauseOnHover
                 />
-
             </div>
         </>
     );
